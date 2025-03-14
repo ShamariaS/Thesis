@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Chatbot</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f9f9f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+           margin: 0;
+        }
+
+        #video-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+
+        #chat-container {
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto;
+            border: 1px solid #ddd;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+            background-color: white;
+            margin-top: 50px;
+        }
+
+        #chat-box {
+            max-height: 300px;
+            overflow-y: auto;
+            margin-bottom: 10px;
+        }
+
+        .user-message, .bot-message {
+            padding: 12px;
+            margin: 5px 0;
+            border-radius: 10px;
+            font-size: 16px;
+        }
+
+        .user-message {
+            background-color: #d1e7ff;
+            text-align: right;
+        }
+
+        .bot-message {
+            background-color: #f1f1f1;
+            text-align: left;
+        }
+
+        #user-input {
+            width: calc(100% - 110px);
+            padding: 12px;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+            font-size: 16px;
+        }
+
+        #send-button {
+            padding: 12px 20px;
+            border: none;
+            background-color: #007BFF;
+            color: white;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        #send-button:hover {
+            background-color: #0056b3;
+        }
+
+        .question-button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            border: none;
+            background-color: #28a745;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .question-button:hover {
+            background-color: #218838;
+        }
+
+        #questions-container {
+            margin-top: 20px;
+        }
+
+        #next-button {
+            padding: 12px 20px;
+            border: none;
+            background-color: #ff9800;
+            color: #040000;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            display: none; 
+            margin-top: 20px;
+        }
+
+        #next-button:hover {
+            background-color: #e68900;
+        }
+
+    </style>
+</head>
+<body>
+    <video id="video-bg" autoplay loop muted>
+        <source src="assets/videos/Untitled design.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <div id="chat-container">
+        <div id="chat-box">
+            <div class="bot-message">Hello! How can I assist you today? You can ask one of the following questions:</div>
+        </div>
+        <div id="questions-container">
+            <button class="question-button" onclick="askQuestion('What does a nutrition label consist of?')">What does a nutrition label consist of?</button>
+            <button class="question-button" onclick="askQuestion('What is sodium, and how does it affect my health?')">What is sodium, and how does it affect my health?</button>
+            <button class="question-button" onclick="askQuestion('Can you provide tips for a healthier diet?')">Can you provide tips for a healthier diet?</button>
+            <button id="next-button" onclick="goToNextPage()">Go to Next Page</button>
+        </div>
+        <input type="text" id="user-input" placeholder="Ask me something...">
+        <button id="send-button">Send</button>
+    </div>
+
+    <script>
+        const sendButton = document.getElementById('send-button');
+        const userInput = document.getElementById('user-input');
+        const chatBox = document.getElementById('chat-box');
+        const questionsContainer = document.getElementById('questions-container');
+        const nextButton = document.getElementById('next-button');
+
+        
+        const responses = {
+            "What does a nutrition label consist of?": "A nutrition label is a valuable tool that provides essential information about the contents of a food product, helping you make healthier choices. It typically includes the serving size, calories, nutrient breakdown, percent daily values, and ingredients. Some labels may include extra information, like allergen warnings or nutritional claims such as 'low-fat' or 'gluten-free', which can guide you towards making informed dietary choices.",
+            "What is sodium, and how does it affect my health?": "Sodium is a mineral that helps balance fluids in your body and plays a key role in nerve and muscle function. However, consuming too much sodium can lead to high blood pressure, increasing the risk of heart disease and stroke. Most people consume more sodium than necessary, often from processed and packaged foods.",
+            "Can you provide tips for a healthier diet?":"Here are a few tips for a healthier diet: limit processed foods, control portion sizes, stay hydrated, and of course, pay attention to nutrition facts and ingredients to make informed decisions about what you're eating!"
+        };
+
+        
+        function sendMessage(message) {
+            chatBox.innerHTML += `<div class="user-message">${message}</div>`;
+            userInput.value = '';
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            
+            const botMessage = responses[message] || "You're welcome! If you have anymore questions, dont hesitate!";
+            chatBox.innerHTML += `<div class="bot-message">${botMessage}</div>`;
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+             function askQuestion(question) {
+            sendMessage(question);
+            nextButton.style.display = 'block';
+        }
+
+        sendButton.addEventListener('click', () => {
+            const userMessage = userInput.value.trim();
+            if (userMessage) {
+                sendMessage(userMessage);
+            }
+        });
+
+             userInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendButton.click();
+            }
+        });
+
+        function goToNextPage() {
+           window.location.href = "index2.html";
+        }
+    </script>
+</body>
+</html>

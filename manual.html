@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scan or Enter Nutrition</title>
+    <script src="https://unpkg.com/quagga"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+            flex-direction: column;
+            align-items: center;
+        }
+        .label-container {
+            width: 350px;
+            border: 2px solid black;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        .header {
+            font-weight: bold;
+            font-size: 24px;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .divider {
+            border-bottom: 2px solid black;
+            margin: 10px 0;
+        }
+        .nutrient-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 5px 0;
+        }
+        .input-box {
+            width: 80px;
+            padding: 4px;
+            text-align: center;
+        }
+        .alert {
+            background-color: #ffcccc;
+        }
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+        }
+        .button-container input {
+            margin-right: 10px;
+        }
+        .analyze-button {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            font-size: 18px;
+            font-weight: bold;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .analyze-button:hover {
+            background-color: #218838;
+        }
+        .message {
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 20px;
+            text-align: center;
+            color: #007bff;
+        }
+        .next-button {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .next-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+<div class="label-container">
+    <div class="header">Nutrition Facts</div>
+    <div class="divider"></div>
+    <div class="nutrient-row">
+        <strong>Amount per serving</strong>
+    </div>
+    <div class="divider"></div>
+
+    <div class="nutrient-row">
+        <span style='width: 40%'>Total Fat</span>
+        <input type="text" id="totalFat" class="input-box"> <span style='width: 20%'> g  </span>
+    </div>
+    <div class="nutrient-row">
+        <span style='width: 40%'>Saturated Fat</span>
+        <input type="text" id="saturatedFat" class="input-box"><span style='width: 20%'> g  </span>
+    </div>
+    <div class="nutrient-row">
+        <span style='width: 40%'>Trans Fat</span>
+        <input type="text" id="transFat" class="input-box"><span style='width: 20%'> g  </span>
+    </div>
+
+    <div class="divider"></div>
+    <div class="nutrient-row">
+        <span style='width: 40%'>Cholesterol</span>
+        <input type="text" id="cholesterol" class="input-box"><span style='width: 20%'> mg </span>
+    </div>
+    <div class="nutrient-row">
+        <span style='width: 40%'>Sodium</span>
+        <input type="text" id="sodium" class="input-box"><span style='width: 20%'> mg  </span>
+    </div>
+
+    <div class="divider"></div>
+    <div class="nutrient-row">
+        <span style='width: 40%'>Total Carbohydrate</span>
+        <input type="text" id="carbohydrate" class="input-box"><span style='width: 20%'> g</span>
+    </div>
+    <div class="nutrient-row">
+        <span style='width: 40%'>Dietary Fiber</span>
+        <input type="text" id="fiber" class="input-box" > <span style='width: 20%'>g</span>
+    </div>
+    <div class="nutrient-row">
+        <span style='width: 40%'>Total Sugars</span>
+        <input type="text" id="totalSugars" class="input-box"> <span style='width: 20%'>g</span>
+    </div>
+    <div class="nutrient-row">
+        <span style='width: 40%'>Added Sugars</span>
+        <input type="text" id="addedSugars" class="input-box"> <span style='width: 20%'>g</span>
+    </div>
+
+    <div class="divider"></div>
+    <div class="nutrient-row">
+        <span style='width: 40%'>Protein</span>
+        <input type="text" id="protein" class="input-box"> <span style='width: 20%'>g</span>
+    </div>
+
+    <div class="divider"></div>
+    <div class="nutrient-row">
+        <span style='width: 40%'>Vitamin D</span>
+        <input type="text" id="vitaminD" class="input-box"><span style='width: 20%'> mcg </span>
+    </div>
+    <div class="nutrient-row">
+        <span style='width: 40%'>Calcium</span>
+        <input type="text" id="calcium" class="input-box"> <span style='width: 20%'> mg</span>
+    </div>
+    <div class="nutrient-row">
+        <span style='width: 40%'>Iron</span>
+        <input type="text" id="iron" class="input-box" ><span style='width: 20%'> mg </span>
+    </div>
+    <div class="nutrient-row">
+        <span style='width: 40%'>Potassium</span>
+        <input type="text" id="potassium" class="input-box"><span style='width: 20%'> mg </span>
+    </div>
+
+    <button class="analyze-button" onclick="analyzeNutrition()">Analyze</button>
+    <button class="next-button" onclick="goToNextPage()">Next</button>
+
+    <div class="message" id="message"></div>
+</div>
+
+<script>
+    async function fetchProductInfo(barcode) {
+        console.log("Product barcode detected:", barcode);
+        fetch('https://world.openfoodfacts.org/api/v0/product/${barcode}.json')
+             .then(response => response.json())
+            .then(data => {
+                if (data.status === 1) {
+                    let product = data.product.nutriments;
+                    document.getElementById("totalFat").value = product.fat_100g || '';
+                    document.getElementById("saturatedFat").value = product.saturated_fat_100g || '';
+                    document.getElementById("transFat").value = product.trans_fat_100g || '';
+                    document.getElementById("cholesterol").value = product.cholesterol_100g || '';
+                    document.getElementById("sodium").value = product.sodium_100g || '';
+                    document.getElementById("carbohydrate").value = product.carbohydrates_100g || '';
+                    document.getElementById("fiber").value = product.fiber_100g || '';
+                    document.getElementById("totalSugars").value = product.sugars_100g || '';
+                    document.getElementById("addedSugars").value = product.added_sugars_100g || '';
+                    document.getElementById("protein").value = product.proteins_100g || '';
+                    document.getElementById("vitaminD").value = product.vitamin_d_100g || '';
+                    document.getElementById("calcium").value = product.calcium_100g || '';
+                    document.getElementById("iron").value = product.iron_100g || '';
+                    document.getElementById("potassium").value = product.potassium_100g || '';
+                }
+            })
+            .catch(err => console.log(err));
+    }
+
+    function analyzeNutrition() {
+    const totalFat = parseFloat(document.getElementById('totalFat').value);
+    const saturatedFat = parseFloat(document.getElementById('saturatedFat').value);
+    const cholesterol = parseFloat(document.getElementById('cholesterol').value);
+    const sodium = parseFloat(document.getElementById('sodium').value);
+    const carbohydrate = parseFloat(document.getElementById('carbohydrate').value);
+    const fiber = parseFloat(document.getElementById('fiber').value);
+    const totalSugars = parseFloat(document.getElementById('totalSugars').value);
+    const addedSugars = parseFloat(document.getElementById('addedSugars').value);
+    const protein = parseFloat(document.getElementById('protein').value);
+    const vitaminD = parseFloat(document.getElementById('vitaminD').value);
+    const calcium = parseFloat(document.getElementById('calcium').value);
+    const iron = parseFloat(document.getElementById('iron').value);
+    const potassium = parseFloat(document.getElementById('potassium').value);
+    const transFat = parseFloat(document.getElementById('transFat').value);
+
+    let message = '';
+
+    const saturatedFatThreshold = 20;
+    const cholesterolThreshold = 300;
+    const sodiumThreshold = 2300;
+    const addedSugarsThreshold = 50;
+    const fiberThreshold = 28;
+    const totalFatThreshold = 78;
+    const carbohydrateThreshold = 275;
+    const proteinThreshold = 50;
+    const totalSugarsThreshold = 50;
+    const vitaminDThreshold = 20;
+    const calciumThreshold = 1300;
+    const ironThreshold = 18;
+    const potassiumThreshold = 4700;
+    const transFatThreshold = 0;
+
+
+    const saturatedFatElement = document.getElementById('saturatedFat');
+    const cholesterolElement = document.getElementById('cholesterol');
+    const sodiumElement = document.getElementById('sodium');
+    const addedSugarsElement = document.getElementById('addedSugars');
+    const fiberElement = document.getElementById('fiber');
+    const totalFatElement = document.getElementById('totalFat');
+    const carbohydrateElement = document.getElementById('carbohydrate');
+    const proteinElement = document.getElementById('protein');
+    const totalSugarsElement = document.getElementById('totalSugars');
+    const vitaminDElement = document.getElementById('vitaminD');
+    const calciumElement = document.getElementById('calcium');
+    const ironElement = document.getElementById('iron');
+    const potassiumElement = document.getElementById('potassium');
+    const transFatElement = document.getElementById('transFat');
+
+    if (saturatedFat > saturatedFatThreshold) {
+        message += 'High Saturated Fat!<br>';
+        saturatedFatElement.style.border = '4px solid red'; 
+    } else {
+        saturatedFatElement.style.border = '4px solid green'; 
+    }
+
+    if (cholesterol > cholesterolThreshold) {
+        message += 'High Cholesterol!<br>';
+        cholesterolElement.style.border = '4px solid red'; 
+    } else {
+        cholesterolElement.style.border = '4px solid green'; 
+    }
+
+    if (sodium > sodiumThreshold) {
+        message += 'High Sodium!<br>';
+        sodiumElement.style.border = '4px solid red'; 
+    } else {
+        sodiumElement.style.border = '4px solid green'; 
+    }
+
+    if (addedSugars > addedSugarsThreshold) {
+        message += 'High Added Sugars!<br>';
+        addedSugarsElement.style.border = '4px solid red'; 
+    } else {
+        addedSugarsElement.style.border = '4px solid green'; 
+    }
+
+    if (fiber < fiberThreshold) {
+        message += 'Low Fiber!<br>';
+        fiberElement.style.border = '4px solid orange';
+    } else {
+        fiberElement.style.border = '4px solid green'; 
+    }
+
+    if (totalFat > totalFatThreshold) {
+        message += 'High Total Fat!<br>';
+        totalFatElement.style.border = '4px solid red'; 
+    } else {
+        totalFatElement.style.border = '4px solid green'; 
+    }
+
+    if (carbohydrate > carbohydrateThreshold) {
+        message += 'High Carbohydrate!<br>';
+        carbohydrateElement.style.border = '4px solid red'; 
+    } else {
+        carbohydrateElement.style.border = '4px solid green'; 
+    }
+
+    if (protein > proteinThreshold) {
+        message += 'High Protein!<br>';
+        proteinElement.style.border = '4px solid red'; 
+    } else {
+        proteinElement.style.border = '4px solid green'; 
+    }
+
+    if (totalSugars > totalSugarsThreshold) {
+        message += 'High Sugar!<br>';
+        totalSugarsElement.style.border = '4px solid red'; 
+    } else {
+        totalSugarsElement.style.border = '4px solid green'; 
+    }
+
+    if (vitaminD > vitaminDThreshold) {
+        message += 'VitaminD: Max level exceeded<br>';
+        vitaminDElement.style.border = '4px solid red'; 
+    } else {
+        vitaminDElement.style.border = '4px solid green'; 
+    }
+
+    if (calcium > calciumThreshold) {
+        message += 'Calcium: Max level exceeded<br>';
+        calciumElement.style.border = '4px solid red'; 
+    } else {
+        calciumElement.style.border = '4px solid green'; 
+    }
+
+    if (iron > ironThreshold) {
+        message += 'Iron: Max level exceeded<br>';
+        ironElement.style.border = '4px solid red'; 
+    } else {
+        ironElement.style.border = '4px solid green'; 
+    }
+
+    if (potassium > potassiumThreshold) {
+        message += 'Potassium: Max level exceeded<br>';
+        potassiumElement.style.border = '4px solid red'; 
+    } else {
+        potassiumElement.style.border = '4px solid green'; 
+    }
+
+    if (transFat > transFatThreshold) {
+        message += 'TransFat: Max level exceeded<br>';
+        transFatElement.style.border = '4px solid red'; 
+    } else {
+        transFatElement.style.border = '4px solid green'; 
+    }
+
+    if (message === '') {
+        message = 'This product seems to be balanced!';
+    }
+    
+    document.getElementById('message').innerHTML = message;
+}
+
+    function goToNextPage() {
+  window.location.href = "ecards.html";
+}
+</script>
+
+</body>
+</html>

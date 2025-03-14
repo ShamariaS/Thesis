@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Show Cards</title>
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #f4f7f6;
+      margin: 0;
+      padding: 20x;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+
+  background-image: url('assets/bckpic.png'); 
+  background-size: cover; 
+  background-position: center; 
+  background-repeat: no-repeat; 
+    }
+
+    .container {
+      background-color: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      padding: 30px;
+      width: 80%;
+      max-width: 1200px;
+      text-align: center;
+    }
+
+    h2 {
+      font-size: 26px;
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    .card-selector {
+      margin: 10px;
+      padding: 10px;
+    }
+
+    .card-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); 
+      gap: 20px;
+      justify-items: center;
+    }
+
+    .card {
+      display: none;
+      background-color: #f9f9f9;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      padding: 15px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+      width: 100%;
+    }
+
+    .card h3 {
+      font-size: 20px;
+      color: #007BFF;
+      margin-top: 0;
+    }
+
+    .card p {
+      color: #555;
+    }
+
+    .selected {
+      display: block;
+    }
+    .show-more {
+      margin-top: 10px;
+      background-color: #007BFF;
+      color: #fff;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .show-more:hover {
+      background-color: #0056b3;
+    }
+
+    .extra-info {
+      display: none;
+      color: #333;
+      margin-top: 10px;
+      font-size: 14px;
+    }
+
+    button {
+      background-color: #007BFF;
+      color: #ffffff;
+      border: none;
+      border-radius: 5px;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    .message-box {
+      margin-bottom: 20px;
+    }
+
+    #additional-options {
+      display: none;
+    }
+
+    #showCardsButton {
+      display: none;
+    }
+
+    #next-button {
+            padding: 12px 20px;
+            border: none;
+            background-color: #ff9800;
+            color: white;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            display: none; /* Initially hide the button */
+            margin-top: 20px;
+        }
+
+        #next-button:hover {
+            background-color: #e68900;
+        }
+
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="message-box">
+      <h2>Ready to learn more? Choose a nutrient to explore its impact on your health!</h2>
+      
+      <input type="checkbox" id="sodium" class="card-selector" onchange="toggleShowButton()"> <label for="sodium">Sodium</label><br>
+      <input type="checkbox" id="totalFat" class="card-selector" onchange="toggleShowButton()"> <label for="totalFat">Total Fat</label><br>
+      <input type="checkbox" id="protein" class="card-selector" onchange="toggleShowButton()"> <label for="protein">Protein</label><br>
+      <input type="checkbox" id="carbs" class="card-selector" onchange="toggleShowButton()"> <label for="carbs">Carbohydrates</label><br>
+      
+      <button onclick="toggleCheckboxes()">Show More Options</button>
+
+      <div id="additional-options">
+        <input type="checkbox" id="Tsugar" class="card-selector" onchange="toggleShowButton()"> <label for="Tsugar">Total Sugars</label><br>
+        <input type="checkbox" id="sugar" class="card-selector" onchange="toggleShowButton()"> <label for="sugar">Added Sugars</label><br>
+        <input type="checkbox" id="saturatedFat" class="card-selector" onchange="toggleShowButton()"> <label for="saturatedFat">Saturated Fat</label><br>
+        <input type="checkbox" id="dietaryFiber" class="card-selector" onchange="toggleShowButton()"> <label for="dietaryFiber">Dietary Fiber</label><br>
+        <input type="checkbox" id="vitaminD" class="card-selector" onchange="toggleShowButton()"> <label for="vitaminD">Vitamin D</label><br>
+        <input type="checkbox" id="iron" class="card-selector" onchange="toggleShowButton()"> <label for="iron">Iron</label><br>
+        <input type="checkbox" id="calcium" class="card-selector" onchange="toggleShowButton()"> <label for="calcium">Calcium</label><br>
+        <input type="checkbox" id="potassium" class="card-selector" onchange="toggleShowButton()"> <label for="potassium">Potassium</label><br>
+      </div>
+      <button id="showCardsButton" onclick="showSelectedCards()">Show Selected Cards</button>
+    </div>
+    <div class="card-container">
+      <div id="sodiumCard" class="card">
+        <h3>Sodium</h3>
+        <p><strong>Sodium is a mineral that helps maintain fluid balance, nerve function, and muscle contractions.</strong></p>
+        <div class="extra-info">
+          <p><strong>Too much sodium can lead to high blood pressure, a risk factor for heart disease and stroke. It can also cause fluid retention and kidney problems.</strong> </p>
+          <p><strong>The recommended daily value (DV) for Sodium is 2,300g per day based on a 2,000-calorie diet.</strong></p>
+        </div>
+        <button class="show-more" onclick="toggleShowMore('sodium')">Show More</button>
+      </div>
+
+      <div id="totalFatCard" class="card">
+        <h3>Total Fat</h3>
+        <p><strong>Total fat is a macronutrient that provides energy and supports cell growth.</strong></p>
+        <div class="extra-info">
+          <p><strong>While necessary for the body, excessive total fat intake can contribute to obesity and related health issues.</strong></p>
+          <p><strong>The recommended daily value (DV) for Sodium is 78g per day based on a 2,000-calorie diet.</strong></p>
+        </div>
+        <button class="show-more" onclick="toggleShowMore('totalFat')">Show More</button>
+      </div>
+
+      <div id="proteinCard" class="card">
+        <h3>Protein</h3>
+        <p><strong>Protein is a macronutrient made up of amino acids that is essential for building and repairing tissues.</strong></p>
+        <div class="extra-info">
+          <p><strong>Protein is crucial for muscle development, immune function, and hormone production. Too little protein can lead to muscle weakness and fatigue, while too much may strain the kidneys.</strong></p>
+          <p><strong>The recommended intake is 50g per day based on a 2,000-calorie diet.</strong> </p>
+        </div>
+        <button class="show-more" onclick="toggleShowMore('protein')">Show More</button>
+      </div>
+
+      <div id="carbsCard" class="card">
+        <h3>Carbohydrates</h3>
+        <p><strong>Carbohydrates are the body's primary source of energy and are found in foods like bread, rice, pasta, and fruits.</strong></p>
+        <div class="extra-info">
+          <p><strong>Carbohydrates provide energy to the brain, muscles, and tissues.</strong></p>
+          <p><strong>Excessive intake can lead to weight gain, and increased risk of type 2 Diabetes.</strong></p>
+          <p><strong>The recommended daily value (DV) for carbohydrates is 275g per day based on a 2,000-calorie diet.</strong></p>
+        </div>
+        <button class="show-more" onclick="toggleShowMore('carbs')">Show More</button>
+      </div>
+
+      <div id="sugarCard" class="card">
+        <h3>Added Sugars</h3>
+        <p><strong>Added sugars are sugars that are added to foods during processing or preparation (e.g., table sugar, syrups).</strong></p>
+        <div class="extra-info">
+          <p><strong>Added sugars contribute to excess calorie intake and can lead to obesity and heart disease.</strong></p>
+          <p><strong>The recommended daily value (DV) for added sugars is 50g per day based on a 2,000-calorie diet.</strong></p>
+        </div>
+        <button class="show-more" onclick="toggleShowMore('sugar')">Show More</button>
+      </div>
+
+      <div id="TsugarCard" class="card">
+        <h3>Total Sugars</h3>
+        <p><strong>Total sugars refer to both natural sugars, like those in fruits, and added sugars found in processed foods.</strong></p>
+        <div class="extra-info">
+          <p><strong>Excessive intake of sugar can contribute to weight gain and increase the risk of chronic diseases like diabetes.</strong></p>
+          <p><strong>The recommended daily value (DV) for sugar is 50g per day based on a 2,000-calorie diet.</strong></p>
+        </div>
+        <button class="show-more" onclick="toggleShowMore('Tsugar')">Show More</button>
+      </div>
+
+      <div id="vitaminDCard" class="card">
+        <h3>Vitamin D</h3>
+        <p><strong>Adequate vitamin D is essential for bone health and immune system support.</strong></p>
+        <div class="extra-info">
+          <p><strong>Deficiency can lead to weakened bones and increase risk of infections</strong></p>
+          <p><strong>The recommended daily value (DV) for sugar is 20mcg per day based on a 2,000-calorie diet.</strong></p>
+        </div>
+        <button class="show-more" onclick="toggleShowMore('vitaminD')">Show More</button>
+      </div>
+
+      <div id="saturatedFatCard" class="card">
+        <h3>Saturated Fat</h3>
+        <p><strong>Saturated Fat is a type of fat primarily found in animal products and some plant oils.</strong></p>
+        <div class="extra-info">
+          <p><strong>Excessive intake raises cholesterol, increasing the risk of heart disease.</strong></p>
+          <p><strong>The recommended daily value (DV) for Saturated Fat is 20g per day based on a 2,000-calorie diet.</strong></p>
+        </div>
+        <button class="show-more" onclick="toggleShowMore('saturatedFat')">Show More</button>
+      </div>
+
+      <div id="dietaryFiberCard" class="card">
+        <h3>Dietary Fiber</h3>
+        <p><strong>Dietary fiber is a type of carbohydrate that the body cannot digest andit helps regulate the digestive system.</strong></p>
+        <div class="extra-info">
+          <p><strong>Fiber helps prevent constipation and supports overall gut health.</strong></p>
+          <p><strong>The recommended daily value (DV) for Dietary Fiber is 28g per day based on a 2,000-calorie diet.</strong></p>
+        </div>
+        <button class="show-more" onclick="toggleShowMore('dietaryFiber')">Show More</button>
+      </div>
+
+      <div id="ironCard" class="card">
+        <h3>Iron</h3>
+        <p><strong></strong>Iron is a mineral essential for producing hemoglobin, which carries oxygen in the blood.</strong></p>
+        <div class="extra-info">
+          <p><strong>Iron is crucial for transporting oxygen throughout the body.</strong></p>
+          <p><strong>The recommended daily value (DV) for Iron is 28g per day based on a 2,000-calorie diet.</strong></p>
+        </div>
+        <button class="show-more" onclick="toggleShowMore('iron')">Show More</button>
+      </div>
+
+      <div id="calciumCard" class="card">
+        <h3>Calcium</h3>
+        <p><strong></strong>Calcium is a mineral that is vital for bone health and muscle function.</strong></p>
+        <div class="extra-info">
+          <p><strong>Calcium is necessary for maintaining strong bones and preventing osteoporosis.</strong></p>
+          <p><strong>The recommended daily value (DV) for Calcium is 28g per day based on a 2,000-calorie diet.</strong></p>
+        </div>
+        <button class="show-more" onclick="toggleShowMore('calcium')">Show More</button>
+      </div>
+
+      <div id="potassiumCard" class="card">
+        <h3>Potassium</h3>
+        <p><strong></strong>Potassium is a mineral and electrolyte that helps balance fluids in your body and supports proper muscle and nerve function</strong></p>
+        <div class="extra-info">
+          <p><strong>Potassium is essential for maintaining healthy blood pressure and preventing muscle cramps.</strong></p>
+          <p><strong>The recommended daily value (DV) for potassium is 4,700mg per day based on a 2,000-calorie diet.</strong></p>
+        </div>
+        <button class="show-more" onclick="toggleShowMore('potassium')">Show More</button>
+      </div>
+    </div>
+
+    <button id="next-button" onclick="window.location.href='chatbot.html'">Go to Next Page</button>
+  </div>
+
+  <script>
+    let currentCheckboxes = [];
+
+    function toggleShowButton() {
+      const selectedCheckboxes = Array.from(document.querySelectorAll('.card-selector:checked'));
+      currentCheckboxes = selectedCheckboxes.map(checkbox => checkbox.id);
+      const showButton = document.getElementById('showCardsButton');
+      showButton.style.display = currentCheckboxes.length > 0 ? 'inline-block' : 'none';
+      document.getElementById('next-button').style.display = 'inline-block';
+    }
+
+    function toggleCheckboxes() {
+      const additionalOptions = document.getElementById('additional-options');
+      const showCardsButton = document.getElementById('showCardsButton');
+      if (additionalOptions.style.display === 'none') {
+        additionalOptions.style.display = 'block';
+        showCardsButton.style.display = 'none';
+      } else {
+        additionalOptions.style.display = 'none';
+      }
+    }
+
+    function showSelectedCards() {
+      const selectedCards = currentCheckboxes;
+      selectedCards.forEach(cardId => {
+        const card = document.getElementById(cardId + 'Card');
+        card.classList.add('selected');
+      });
+    }
+
+    function toggleShowMore(cardId) {
+      const card = document.getElementById(cardId + 'Card');
+      const extraInfo = card.querySelector('.extra-info');
+      extraInfo.style.display = extraInfo.style.display === 'none' ? 'block' : 'none';
+    }
+  </script>
+</body>
+</html>
