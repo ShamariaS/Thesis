@@ -172,32 +172,6 @@
 </div>
 
 <script>
-    async function fetchProductInfo(barcode) {
-        console.log("Product barcode detected:", barcode);
-        fetch('https://world.openfoodfacts.org/api/v0/product/${barcode}.json')
-             .then(response => response.json())
-            .then(data => {
-                if (data.status === 1) {
-                    let product = data.product.nutriments;
-                    document.getElementById("totalFat").value = product.fat_100g || '';
-                    document.getElementById("saturatedFat").value = product.saturated_fat_100g || '';
-                    document.getElementById("transFat").value = product.trans_fat_100g || '';
-                    document.getElementById("cholesterol").value = product.cholesterol_100g || '';
-                    document.getElementById("sodium").value = product.sodium_100g || '';
-                    document.getElementById("carbohydrate").value = product.carbohydrates_100g || '';
-                    document.getElementById("fiber").value = product.fiber_100g || '';
-                    document.getElementById("totalSugars").value = product.sugars_100g || '';
-                    document.getElementById("addedSugars").value = product.added_sugars_100g || '';
-                    document.getElementById("protein").value = product.proteins_100g || '';
-                    document.getElementById("vitaminD").value = product.vitamin_d_100g || '';
-                    document.getElementById("calcium").value = product.calcium_100g || '';
-                    document.getElementById("iron").value = product.iron_100g || '';
-                    document.getElementById("potassium").value = product.potassium_100g || '';
-                }
-            })
-            .catch(err => console.log(err));
-    }
-
     function analyzeNutrition() {
     const totalFat = parseFloat(document.getElementById('totalFat').value);
     const saturatedFat = parseFloat(document.getElementById('saturatedFat').value);
